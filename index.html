@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>형남공학상 발표 디펜스 트레이너 | 3D HBM TIM 선정 기준</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js (Optional visualization) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
     body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
-    .math-font { font-family: 'Times New Roman', Cambria, serif; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
@@ -28,16 +26,19 @@
       </div>
       <!-- Tab Navigation -->
       <nav class="flex flex-wrap gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-700/80 shadow-inner">
-        <button onclick="switchTab('guide')" id="tab-btn-guide" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-blue-600 text-white shadow">
-          📖 기초 개념 마스터 (7단계)
+        <button onclick="switchTab('guide')" id="tab-btn-guide" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-blue-600 text-white shadow">
+          📖 기초 개념 (7단계)
         </button>
-        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
+        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
           📊 수식 & 시뮬레이터
         </button>
-        <button onclick="switchTab('qa')" id="tab-btn-qa" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
+        <button onclick="switchTab('datalab')" id="tab-btn-datalab" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
+          📑 논문 데이터실 & 민감도
+        </button>
+        <button onclick="switchTab('qa')" id="tab-btn-qa" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
           🎯 AI 심사위원 모의 디펜스 (9문항)
         </button>
-        <button onclick="switchTab('history')" id="tab-btn-history" class="tab-btn px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white flex items-center gap-1.5">
+        <button onclick="switchTab('history')" id="tab-btn-history" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white flex items-center gap-1.5">
           📝 오답노트 <span id="history-badge" class="bg-amber-400 text-slate-950 text-xs px-1.5 py-0.2 rounded-full font-extrabold">0</span>
         </button>
       </nav>
@@ -68,7 +69,7 @@
         </div>
       </div>
 
-      <!-- Step Content Box (Pre-populated with Step 1 fallback) -->
+      <!-- Step Content Box -->
       <div id="step-content-container" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
         <!-- Rendered by renderStep() -->
       </div>
@@ -111,7 +112,7 @@
           </div>
         </div>
 
-        <!-- Formula Render (Pure CSS/HTML math for 100% reliable rendering) -->
+        <!-- Formula Render -->
         <div class="mt-4 p-5 bg-slate-900 text-white rounded-xl overflow-x-auto text-center font-mono">
           <div class="text-base sm:text-xl font-bold text-amber-300 tracking-wide">
             T<sub>max</sub> = T<sub>∞</sub> + N·q<sub>0</sub>·[ R<sub>rest</sub> + (R''<sub>TIM</sub> / A) ] + q<sub>0</sub>·r·[ N(N - 1) / 2 ]
@@ -252,7 +253,197 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- TAB 2: AI 심사위원 모의 디펜스 (9문항) -->
+    <!-- TAB 2: 논문 핵심 데이터실 & 열 민감도 분석 (NEW!) -->
+    <!-- ========================================================== -->
+    <section id="tab-datalab" class="hidden space-y-6">
+      
+      <!-- Sensitivity Analysis Banner (Table 8) -->
+      <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 sm:p-7 rounded-2xl shadow-sm border border-slate-800">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400 text-slate-950">논문 표 8 핵심 분석</span>
+          <span class="text-xs text-blue-200">동일 상대 변화율(20%)에 따른 열 민감도 비교</span>
+        </div>
+        <h3 class="text-lg sm:text-xl font-bold text-white">"열전도도 k를 높이는 것보다, 실장 두께(BLT)를 줄이는 것이 온도를 더 많이 낮춘다!"</h3>
+        <p class="text-xs sm:text-sm text-slate-300 mt-2 leading-relaxed">
+          가상 기준 TIM(k=2, BLT=50 µm, R''c=0.050)에서 세 변수를 각각 20%씩 단독 개선했을 때의 8Hi 최고온도 하강 기여도를 분석했습니다.
+        </p>
+
+        <!-- Sensitivity Comparison Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 mt-4 text-slate-900">
+          <div class="bg-white p-4 rounded-xl text-center shadow-sm">
+            <span class="text-xs font-bold text-slate-500 block">k 단독 20% 개선 (2→2.4)</span>
+            <div class="text-2xl font-extrabold text-blue-600 mt-1">▼ 0.620 °C</div>
+            <span class="text-[11px] text-slate-400">R''TIM: 0.2583</span>
+          </div>
+          <div class="bg-amber-50 p-4 rounded-xl text-center border-2 border-amber-400 shadow-sm">
+            <span class="text-xs font-bold text-amber-800 block">⭐ BLT 단독 20% 감소 (50→40µm)</span>
+            <div class="text-2xl font-extrabold text-amber-600 mt-1">▼ 0.744 °C</div>
+            <span class="text-[11px] text-amber-700 font-bold">최대 단독 효과! (R''TIM: 0.2500)</span>
+          </div>
+          <div class="bg-white p-4 rounded-xl text-center shadow-sm">
+            <span class="text-xs font-bold text-slate-500 block">R''c 단독 20% 감소 (0.05→0.04)</span>
+            <div class="text-2xl font-extrabold text-slate-700 mt-1">▼ 0.149 °C</div>
+            <span class="text-[11px] text-slate-400">R''TIM: 0.2900</span>
+          </div>
+          <div class="bg-indigo-50 p-4 rounded-xl text-center border border-indigo-200 shadow-sm">
+            <span class="text-xs font-bold text-indigo-900 block">세 변수 동시 20% 개선</span>
+            <div class="text-2xl font-extrabold text-indigo-700 mt-1">▼ 1.341 °C</div>
+            <span class="text-[11px] text-indigo-600">시너지 극대화</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIM Selection Procedure 3-Step Flowchart (Fig 2) -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <h4 class="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+          <span>🗺️ 논문 그림 2: 3단계 TIM 체계적 선정 절차 가이드라인</span>
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+          <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold text-xs">1단계: 경계 검토</span>
+            <h5 class="font-bold text-blue-950 text-sm">공랭 실현 가능성 확인</h5>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              적층 수와 주변 온도를 확인하여 공랭 한계(85°C 10Hi, 95°C 12Hi)를 초과하는지 판정. 초과 시 상부 TIM이 아닌 수랭/하이브리드 본딩으로 전환.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-emerald-600 text-white font-bold text-xs">2단계: 과잉 사양 배제</span>
+            <h5 class="font-bold text-emerald-950 text-sm">저가 그리스 충분 여부 판정</h5>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              허용 열저항 R''allow를 계산하여 85°C 7Hi, 95°C 8Hi 이하인 경우 저가 범용 그리스(DOWSIL 340 등)를 우선 선정해 비용 낭비 방지.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-indigo-600 text-white font-bold text-xs">3단계: 고성능 TIM 확정</span>
+            <h5 class="font-bold text-indigo-950 text-sm">물성 & 재작업 비용 최적화</h5>
+            <p class="text-slate-600 text-xs leading-relaxed">
+              결정 구간(8~9Hi, 10~11Hi)에서 k, BLT, Rc를 만족하는 고성능 TIM(PTM7950 등)을 선정하고, 재작업률 4.25% 손익분기점을 감안하여 최종 양산 승인.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thesis Authentic Data Tables Accordion -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Table 3: R_allow Values -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between border-b pb-2 mb-3">
+            <h4 class="font-bold text-slate-900 text-sm">표 3. DRAM 적층별 허용 TIM 면적당 열저항 (cm²·K/W)</h4>
+            <span class="text-xs text-slate-400">기준 공랭(주변 45 °C)</span>
+          </div>
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700">
+                  <th class="p-2 border">적층(Hi)</th>
+                  <th class="p-2 border">전체 N</th>
+                  <th class="p-2 border font-bold text-amber-700">85 °C 기준</th>
+                  <th class="p-2 border font-bold text-rose-700">95 °C 기준</th>
+                  <th class="p-2 border">판정</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="p-2 border font-semibold">4Hi</td><td class="p-2 border">5</td><td class="p-2 border">3.317</td><td class="p-2 border">4.527</td><td class="p-2 border text-emerald-600">범용 충분</td></tr>
+                <tr class="bg-slate-50"><td class="p-2 border font-semibold">6Hi</td><td class="p-2 border">7</td><td class="p-2 border">1.658</td><td class="p-2 border">2.522</td><td class="p-2 border text-emerald-600">범용 충분</td></tr>
+                <tr><td class="p-2 border font-semibold">8Hi</td><td class="p-2 border">9</td><td class="p-2 border">0.614</td><td class="p-2 border">1.286</td><td class="p-2 border text-blue-600 font-bold">TIM 결정</td></tr>
+                <tr class="bg-slate-50"><td class="p-2 border font-semibold">9Hi</td><td class="p-2 border">10</td><td class="p-2 border">0.207</td><td class="p-2 border">0.812</td><td class="p-2 border text-blue-600 font-bold">TIM 결정</td></tr>
+                <tr class="bg-amber-50/60"><td class="p-2 border font-bold text-amber-900">10Hi</td><td class="p-2 border">11</td><td class="p-2 border text-rose-600 font-bold">-0.151</td><td class="p-2 border font-bold text-blue-700">0.399</td><td class="p-2 border text-amber-800">85°C 공랭불가</td></tr>
+                <tr><td class="p-2 border font-semibold">11Hi</td><td class="p-2 border">12</td><td class="p-2 border text-rose-600">-0.468</td><td class="p-2 border font-bold text-blue-700">0.032</td><td class="p-2 border text-indigo-700">인듐/초고급만</td></tr>
+                <tr class="bg-rose-50/70"><td class="p-2 border font-bold text-rose-900">12Hi</td><td class="p-2 border">13</td><td class="p-2 border text-rose-600 font-bold">-0.748</td><td class="p-2 border text-rose-600 font-bold">-0.293</td><td class="p-2 border text-rose-700 font-bold">공랭 한계 도달</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Table 6: 4-Zone Classification -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between border-b pb-2 mb-3">
+            <h4 class="font-bold text-slate-900 text-sm">표 6. 적층 수별 TIM이 만족해야 할 4대 조건 구간</h4>
+            <span class="text-xs text-slate-400">공통 BLT 50 µm</span>
+          </div>
+          <div class="space-y-2.5 text-xs">
+            <div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-200">
+              <span class="font-bold text-emerald-900 block mb-0.5">1. 저가 범용 그리스로 충분 (85°C: ≤7Hi / 95°C: ≤8Hi)</span>
+              <p class="text-slate-600 text-[11px]">허용 R''TIM ≥ 0.906: DOWSIL 340을 포함한 모든 후보가 통과. 과잉 스펙 지양.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-amber-50 border border-amber-200">
+              <span class="font-bold text-amber-900 block mb-0.5">2. 범용 그리스가 접촉항에 좌우 (95°C: 9Hi)</span>
+              <p class="text-slate-600 text-[11px]">허용 0.812: 범용 그리스 도포 시 접촉 열저항 Rc가 0.066 이하로 밀착되어야 통과.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-blue-50 border border-blue-200">
+              <span class="font-bold text-blue-900 block mb-0.5">3. TIM 선택이 결과를 좌우 (85°C: 8~9Hi / 95°C: 10~11Hi)</span>
+              <p class="text-slate-600 text-[11px]">8Hi(0.614)는 기준TIM 수준, 9Hi(0.207)는 고성능 그리스 수준, 11Hi(0.032)는 인듐 수준 필수.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-rose-50 border border-rose-200">
+              <span class="font-bold text-rose-900 block mb-0.5">4. TIM으로 불가 (85°C: ≥10Hi / 95°C: ≥12Hi)</span>
+              <p class="text-slate-600 text-[11px]">허용 R''TIM < 0: 상부 TIM 열저항 0이어도 초과. 수랭 및 하이브리드 본딩 전환 필수.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Table 2 & Table 4 Dual Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Table 2: Cross Validation -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <h4 class="font-bold text-slate-900 text-sm border-b pb-2 mb-3">표 2. 보정 자료와 Leave-one-out 내부 교차검증 오차</h4>
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700">
+                  <th class="p-2 border">제외 자료</th>
+                  <th class="p-2 border">3차원 해석</th>
+                  <th class="p-2 border">전체 보정값</th>
+                  <th class="p-2 border">보정 잔차</th>
+                  <th class="p-2 border font-bold text-blue-700">교차검증 오차</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="p-2 border font-semibold">4Hi</td><td class="p-2 border">60.9 °C</td><td class="p-2 border">59.65 °C</td><td class="p-2 border">−1.25 °C</td><td class="p-2 border text-emerald-700 font-bold">−2.97 °C</td></tr>
+                <tr class="bg-slate-50"><td class="p-2 border font-semibold">8Hi</td><td class="p-2 border">78.2 °C</td><td class="p-2 border">79.59 °C</td><td class="p-2 border">+1.39 °C</td><td class="p-2 border text-emerald-700 font-bold">+2.68 °C</td></tr>
+                <tr class="bg-rose-50/60"><td class="p-2 border font-bold text-rose-900">12Hi</td><td class="p-2 border">107.3 °C</td><td class="p-2 border">106.82 °C</td><td class="p-2 border">−0.48 °C</td><td class="p-2 border text-rose-700 font-bold">−7.73 °C (외삽한계)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2">
+            * 12Hi 제외 시 4Hi·8Hi만으로 보정하여 12Hi를 외삽 예측했을 때 오차 발생 → 고적층 비선형성으로 인한 외삽 한계 정직하게 규명.
+          </p>
+        </div>
+
+        <!-- Table 4: T_inf Boundary -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <h4 class="font-bold text-slate-900 text-sm border-b pb-2 mb-3">표 4. 주변 온도 변화에 따른 공랭 경계 이동</h4>
+          <div class="overflow-x-auto text-xs">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700">
+                  <th class="p-2 border">주변 온도</th>
+                  <th class="p-2 border font-bold text-amber-700">85 °C 기준 경계</th>
+                  <th class="p-2 border font-bold text-rose-700">95 °C 기준 경계</th>
+                  <th class="p-2 border">영향</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="p-2 border font-semibold">40 °C</td><td class="p-2 border">11Hi</td><td class="p-2 border">12Hi</td><td class="p-2 border text-emerald-700">85°C 기준 한 단 증가 (+1단 여유)</td></tr>
+                <tr class="bg-slate-50 font-bold"><td class="p-2 border">45 °C (기준)</td><td class="p-2 border text-blue-700">10Hi</td><td class="p-2 border text-blue-700">12Hi</td><td class="p-2 border">기준 조건</td></tr>
+                <tr class="bg-rose-50/60"><td class="p-2 border font-semibold text-rose-900">50 °C</td><td class="p-2 border text-rose-700 font-bold">9Hi</td><td class="p-2 border text-rose-700 font-bold">11Hi</td><td class="p-2 border text-rose-700">두 기준 모두 한 단 감소 (-1단 잠식)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[11px] text-slate-500 mt-2">
+            * 데이터센터 흡기 온도가 5 °C 오르면 적층 마진이 1단 사라짐 → 패키징-공조 Co-design 필요성 입증.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- TAB 3: AI 심사위원 모의 디펜스 (9문항) -->
     <!-- ========================================================== -->
     <section id="tab-qa" class="hidden space-y-6">
       
@@ -335,7 +526,7 @@
     </section>
 
     <!-- ========================================================== -->
-    <!-- TAB 3: 오답노트 & 질의응답 히스토리 -->
+    <!-- TAB 4: 오답노트 & 질의응답 히스토리 -->
     <!-- ========================================================== -->
     <section id="tab-history" class="hidden space-y-6">
       
@@ -373,7 +564,7 @@
   </footer>
 
   <!-- ========================================================== -->
-  <!-- JAVASCRIPT LOGIC (100% BULLETPROOF & ERROR-SAFE) -->
+  <!-- JAVASCRIPT LOGIC -->
   <!-- ========================================================== -->
   <script>
     // --- Model Constants ---
@@ -385,7 +576,7 @@
     // --- Tab Switching ---
     function switchTab(tabId) {
       try {
-        ['guide', 'sim', 'qa', 'history'].forEach(id => {
+        ['guide', 'sim', 'datalab', 'qa', 'history'].forEach(id => {
           const el = document.getElementById(`tab-${id}`);
           if (el) el.classList.add('hidden');
           const btn = document.getElementById(`tab-btn-${id}`);
@@ -1191,7 +1382,7 @@
       });
     }
 
-    // --- Onload Initialization (Strictly Ordered & Safe) ---
+    // --- Onload Initialization ---
     window.addEventListener('DOMContentLoaded', () => {
       try {
         renderStep();
