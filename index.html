@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>형남공학상 발표 디펜스 트레이너 | 3D HBM TIM 선정 기준</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    .step-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-950 via-indigo-950 to-slate-900 text-white shadow-xl sticky top-0 z-50 border-b border-indigo-800/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-400 text-slate-950 tracking-wide shadow-sm">숭실대 형남공학상 출품작</span>
+          <span class="text-xs text-blue-200">화학공학과 임태호 교수님 지도</span>
+        </div>
+        <h1 class="text-base sm:text-lg font-bold tracking-tight mt-1 text-white">3D 적층 반도체 TIM 선정 기준 발표 디펜스 트레이너</h1>
+        <p class="text-xs text-slate-300">연구팀: 김영서(20232600) · 김현중(20232604) · 조성진(20231133)</p>
+      </div>
+      <!-- Tab Navigation -->
+      <nav class="flex flex-wrap gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-700/80 shadow-inner">
+        <button onclick="switchTab('guide')" id="tab-btn-guide" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition bg-blue-600 text-white shadow">
+          📖 기초 개념 마스터 (7단계)
+        </button>
+        <button onclick="switchTab('sim')" id="tab-btn-sim" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
+          📊 수식 & 시뮬레이터
+        </button>
+        <button onclick="switchTab('qa')" id="tab-btn-qa" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white">
+          🎯 AI 심사위원 모의 디펜스 (9문항)
+        </button>
+        <button onclick="switchTab('history')" id="tab-btn-history" class="tab-btn px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition text-slate-300 hover:text-white flex items-center gap-1.5">
+          📝 오답노트 <span id="history-badge" class="bg-amber-400 text-slate-950 text-xs px-1.5 py-0.2 rounded-full font-extrabold">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+    <!-- ========================================================== -->
+    <!-- TAB 0: 기초 개념 7단계 마스터 코스 (NEW) -->
+    <!-- ========================================================== -->
+    <section id="tab-guide" class="space-y-6">
+      
+      <!-- Welcome Hero Banner -->
+      <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-800">
+        <div class="max-w-3xl">
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-1 rounded-md border border-amber-400/30">기초부터 완벽 체화 가이드</span>
+          <h2 class="text-xl sm:text-2xl font-bold mt-2.5 text-white">"AI로 작성했지만, 내용은 내 머릿속에 완벽히 들어있어야 합니다."</h2>
+          <p class="text-sm text-slate-200 mt-2 leading-relaxed">
+            HBM 발열 문제의 물리적 배경부터 1차원 수식의 도출, 접촉 열저항의 병목 원리, 공랭 한계점과 비용 손익분기점까지 
+            <strong>발표장에서 교수님이 물어보실 모든 인과관계의 뿌리</strong>를 7단계로 차근차근 정리했습니다.
+          </p>
+        </div>
+        <!-- Progress Pills -->
+        <div class="flex flex-wrap gap-2 mt-5 pt-4 border-t border-slate-800" id="step-nav-pills">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Step Content Box -->
+      <div id="step-content-container" class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+        <!-- Injected by renderStep() -->
+      </div>
+
+      <!-- Bottom Navigation Buttons -->
+      <div class="flex items-center justify-between bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+        <button onclick="prevStep()" id="btn-prev-step" class="px-4 py-2 rounded-lg border border-slate-300 text-slate-700 text-xs sm:text-sm font-semibold hover:bg-slate-50 transition">
+          ← 이전 단계
+        </button>
+        <span id="step-counter" class="text-xs font-bold text-slate-500">Step 1 / 7</span>
+        <button onclick="nextStep()" id="btn-next-step" class="px-5 py-2 rounded-lg bg-blue-600 text-white text-xs sm:text-sm font-semibold hover:bg-blue-700 shadow transition">
+          다음 단계 →
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- TAB 1: 개념 & 수식 시뮬레이터 -->
+    <!-- ========================================================== -->
+    <section id="tab-sim" class="hidden space-y-6">
+      
+      <!-- Top Overview Banner -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+              1차원 정상상태 직렬 열저항 모델 수식
+            </h2>
+            <p class="text-sm text-slate-600 mt-1">
+              최하단 로직 다이(칩 1)에 열이 집중되는 원리를 닫힌 형태(closed-form) 대수식으로 계산하고 허용 열저항을 역산합니다.
+            </p>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 px-4 py-3 rounded-xl text-center">
+            <span class="text-xs font-semibold text-blue-700 block uppercase tracking-wider">보정된 유효 파라미터 (Song & Yoon 3D FEA 기준)</span>
+            <span class="text-sm font-bold text-blue-900">R_rest = 0.802 K/W · 층당 유효저항 r = 0.228 K/W</span>
+          </div>
+        </div>
+
+        <!-- Formula Render -->
+        <div class="mt-4 p-4 bg-slate-900 text-white rounded-xl overflow-x-auto text-center text-sm sm:text-base">
+          $$T_{max} = T_{\infty} + N q_0 \left(R_{rest} + rac{R''_{TIM}}{A}ight) + q_0 r rac{N(N - 1)}{2}$$
+          <div class="text-xs text-slate-400 mt-2">
+            여기서 $N = n + 1$ (DRAM $n$단 + 로직 1단), $q_0 = 2	ext{W}$, $A = 1.21	ext{cm}^2$, $R''_{TIM} = rac{	ext{BLT}}{k_{TIM}} + R''_c$
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls & Live Output Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Controls Column (5 cols) -->
+        <div class="lg:col-span-5 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-5">
+          <h3 class="text-base font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+            <span>⚙️ 공정 & 물성 파라미터 조작</span>
+            <button onclick="resetDefaults()" class="text-xs text-blue-600 hover:underline">기본값 복원</button>
+          </h3>
+
+          <!-- 적층 수 (Hi) -->
+          <div>
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-700">
+              <label for="param-hi">DRAM 적층 수 ($n	ext{Hi}$)</label>
+              <span id="val-hi" class="text-blue-600 font-bold">8Hi (총 9다이)</span>
+            </div>
+            <input type="range" id="param-hi" min="4" max="16" step="1" value="8" class="w-full mt-1.5 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" oninput="updateSim()">
+            <div class="flex justify-between text-xs text-slate-400 mt-0.5">
+              <span>4Hi</span><span>8Hi</span><span>12Hi</span><span>16Hi</span>
+            </div>
+          </div>
+
+          <!-- 주변 온도 (T_inf) -->
+          <div>
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-700">
+              <label for="param-tinf">주변 온도 ($T_{\infty}$)</label>
+              <span id="val-tinf" class="text-blue-600 font-bold">45 °C</span>
+            </div>
+            <input type="range" id="param-tinf" min="35" max="55" step="1" value="45" class="w-full mt-1.5 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" oninput="updateSim()">
+          </div>
+
+          <!-- TIM 후보 프리셋 선택 -->
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">TIM 후보 프리셋 (논문 표 5/7 기준)</label>
+            <select id="param-preset" onchange="applyPreset()" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-slate-50 focus:ring-2 focus:ring-blue-500">
+              <option value="custom">직접 수치 입력 (Custom)</option>
+              <option value="grease_low" selected>저가 범용 그리스 (k=1.5, Rc=0.10)</option>
+              <option value="grease_mid">중급 실리콘 그리스 (k=3.0, Rc=0.08)</option>
+              <option value="grease_high">고성능 그리스 X-23-7783D (k=6.0, Rc=0.01)</option>
+              <option value="pcm">상변화 물질 PTM7950 (k=8.5, Rc=0.015)</option>
+              <option value="indium">인듐 시트 (k=86, Rc=0.03)</option>
+            </select>
+          </div>
+
+          <!-- TIM 열전도도 (k) -->
+          <div>
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-700">
+              <label for="param-k">TIM 열전도도 ($k_{TIM}$)</label>
+              <span id="val-k" class="text-blue-600 font-bold">1.5 W/(m·K)</span>
+            </div>
+            <input type="range" id="param-k" min="0.5" max="20" step="0.1" value="1.5" class="w-full mt-1.5 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" oninput="customChanged(); updateSim();">
+          </div>
+
+          <!-- 실장 두께 (BLT) -->
+          <div>
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-700">
+              <label for="param-blt">실장 두께 (BLT)</label>
+              <span id="val-blt" class="text-blue-600 font-bold">50 µm</span>
+            </div>
+            <input type="range" id="param-blt" min="10" max="150" step="5" value="50" class="w-full mt-1.5 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" oninput="customChanged(); updateSim();">
+          </div>
+
+          <!-- 접촉 열저항 (Rc) -->
+          <div>
+            <div class="flex justify-between items-center text-sm font-semibold text-slate-700">
+              <label for="param-rc">접촉 열저항 ($R''_c$)</label>
+              <span id="val-rc" class="text-blue-600 font-bold">0.100 cm²·K/W</span>
+            </div>
+            <input type="range" id="param-rc" min="0" max="0.200" step="0.005" value="0.100" class="w-full mt-1.5 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600" oninput="customChanged(); updateSim();">
+          </div>
+
+        </div>
+
+        <!-- Calculation & Verdict Column (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Live Result Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Tmax Card -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase">최하단 다이 최고온도 (T_max)</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span id="res-tmax" class="text-3xl font-extrabold text-slate-900">78.2</span>
+                  <span class="text-base font-semibold text-slate-600">°C</span>
+                </div>
+              </div>
+              <div id="badge-tmax" class="mt-3 px-2.5 py-1 rounded-lg text-xs font-bold w-fit bg-emerald-100 text-emerald-800">
+                85 °C / 95 °C 기준 모두 만족
+              </div>
+            </div>
+
+            <!-- Allowable Resistance Card -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+              <div>
+                <span class="text-xs font-semibold text-slate-500 uppercase">허용 TIM 열저항 (R''_allow)</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span id="res-rallow" class="text-3xl font-extrabold text-blue-600">0.245</span>
+                  <span class="text-xs font-semibold text-slate-600">cm²·K/W (85°C 기준)</span>
+                </div>
+              </div>
+              <div id="badge-rallow" class="mt-3 text-xs text-slate-500">
+                현재 TIM 열저항: <strong id="res-rtim" class="text-slate-800 font-bold">0.433</strong> cm²·K/W
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Verdict Box -->
+          <div id="verdict-box" class="p-5 rounded-2xl border transition-all">
+            <!-- Dynamic Content filled by JS -->
+          </div>
+
+          <!-- Temperature Trend Chart -->
+          <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-800 mb-3 flex items-center justify-between">
+              <span>📈 적층 수별 최고온도 추이 비교 (4Hi ~ 16Hi)</span>
+              <span class="text-xs text-slate-500">빨간 점선: 허용 기준선 (85°C / 95°C)</span>
+            </h4>
+            <div class="h-64">
+              <canvas id="thermalChart"></canvas>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- TAB 2: AI 심사위원 모의 디펜스 (9문항) -->
+    <!-- ========================================================== -->
+    <section id="tab-qa" class="hidden space-y-6">
+      
+      <!-- Persona Card -->
+      <div class="bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 rounded-2xl shadow-sm border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-xl font-bold text-white shadow-inner">
+            🎓
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2 py-0.5 rounded bg-amber-400 text-slate-900 font-bold">형남공학상 심사위원</span>
+              <span class="text-xs text-slate-300">화학공학/반도체 공정 전공 교수 페르소나</span>
+            </div>
+            <h2 class="text-lg font-bold mt-1">"자, 발표 잘 들었습니다. 공학적 급소를 짚는 9가지 질문을 드리겠습니다."</h2>
+          </div>
+        </div>
+        <button onclick="pickRandomQuestion()" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-semibold transition flex items-center gap-1.5 shadow">
+          🎲 다른 기습 질문 뽑기
+        </button>
+      </div>
+
+      <!-- Question Selector & Main Q&A Area -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Question List Sidebar (4 cols) -->
+        <div class="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <h3 class="text-sm font-bold text-slate-900 border-b pb-2 flex items-center justify-between">
+            <span>핵심 급소 질문 목록 (9대 영역)</span>
+            <span class="text-xs text-slate-400">클릭하여 선택</span>
+          </h3>
+          <div id="question-list" class="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+            <!-- Generated dynamically -->
+          </div>
+        </div>
+
+        <!-- Answering & Feedback Area (8 cols) -->
+        <div class="lg:col-span-8 space-y-5">
+          
+          <!-- Current Active Question Box -->
+          <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2 mb-2">
+              <span id="active-q-category" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-800">카테고리</span>
+              <span id="active-q-difficulty" class="px-2 py-0.5 rounded text-xs font-semibold bg-rose-100 text-rose-700">난이도</span>
+            </div>
+            <h3 id="active-q-title" class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+              질문이 여기에 표시됩니다.
+            </h3>
+            <p id="active-q-context" class="text-xs sm:text-sm text-slate-600 mt-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+              심사위원의 의도 및 배경 설명이 들어갑니다.
+            </p>
+
+            <!-- User Response Form -->
+            <div class="mt-4">
+              <label for="user-answer-input" class="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+                당신의 답변 (실제 발표장에서 대답하듯 논리적으로 입력해 보세요):
+              </label>
+              <textarea id="user-answer-input" rows="5" class="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" placeholder="예: 저희 연구에서 1차원 직렬 모델을 채택한 이유는 초기 공정 설계 단계에서 복잡한 3D FEA 없이 닫힌 형태의 수식으로 허용 열저항을 신속히 도출하기 위함입니다..."></textarea>
+              
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-3">
+                <span class="text-xs text-slate-500">
+                  💡 팁: 핵심 키워드, 수식 기호, 정량적 수치를 포함하면 높은 점수를 받습니다.
+                </span>
+                <button onclick="evaluateAnswer()" id="btn-submit-answer" class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm transition shadow flex items-center justify-center gap-2">
+                  <span>심사위원 평가 받기</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evaluation Feedback Result Box (Initially Hidden) -->
+          <div id="feedback-result-container" class="hidden bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-5">
+            <!-- Dynamic feedback injected by evaluateAnswer() -->
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ========================================================== -->
+    <!-- TAB 3: 오답노트 & 질의응답 히스토리 -->
+    <!-- ========================================================== -->
+    <section id="tab-history" class="hidden space-y-6">
+      
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <span>📝 모의 디펜스 연습 히스토리 & 오답노트</span>
+          </h2>
+          <p class="text-xs text-slate-600 mt-1">
+            연습한 모든 질문과 나의 답변, 심사위원의 상세 피드백이 브라우저에 자동 누적 저장됩니다.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="exportHistoryMarkdown()" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-semibold transition">
+            📋 마크다운으로 복사
+          </button>
+          <button onclick="clearHistory()" class="px-3.5 py-1.5 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-semibold transition">
+            🗑️ 기록 지우기
+          </button>
+        </div>
+      </div>
+
+      <!-- History Feed -->
+      <div id="history-container" class="space-y-4">
+        <!-- Rendered by renderHistory() -->
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    숭실대학교 화학공학과 형남공학상 출품작 · 지도: 임태호 교수님 · 팀원: 김영서, 김현중, 조성진 · 제작: 두두(Pickle)
+  </footer>
+
+  <!-- ========================================================== -->
+  <!-- JAVASCRIPT LOGIC -->
+  <!-- ========================================================== -->
+  <script>
+    // --- Model Constants ---
+    const Q0 = 2.0;       // W per die
+    const AREA = 1.21;    // cm^2
+    const R_REST = 0.802; // K/W
+    const R_LAYER = 0.228;// K/W
+
+    // --- Tab Switching ---
+    function switchTab(tabId) {
+      ['guide', 'sim', 'qa', 'history'].forEach(id => {
+        document.getElementById(`tab-${id}`).classList.add('hidden');
+        const btn = document.getElementById(`tab-btn-${id}`);
+        btn.classList.remove('bg-blue-600', 'text-white', 'shadow');
+        btn.classList.add('text-slate-300');
+      });
+      document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow');
+      activeBtn.classList.remove('text-slate-300');
+
+      if (tabId === 'history') renderHistory();
+      if (tabId === 'sim' && window.chart) window.chart.update();
+      if (window.renderMathInElement) renderMathInElement(document.getElementById(`tab-${tabId}`));
+    }
+
+    // --- Step-by-Step Concept Master Guide Data ---
+    const guideSteps = [
+      {
+        step: 1,
+        title: "3D 적층 반도체(HBM)와 발열의 본질",
+        subtitle: "왜 평면 반도체보다 적층 반도체가 훨씬 뜨거운가?",
+        badge: "물리적 배경",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              기존의 2D 평면 반도체는 칩 하나가 넓은 기판 위에 놓여 있어 위아래와 사방으로 열을 방출하기 쉬웠습니다. 
+              하지만 <strong>HBM(고대역폭 메모리)</strong>은 로직 다이 위에 4장, 8장, 12장의 DRAM 다이를 수직으로 층층이 쌓아 올립니다.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-3">
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-1">📦 면적당 발열 밀도의 폭증</span>
+                바닥 면적($1.21\text{ cm}^2$)은 손톱만 한데, 다이를 위로 12장 쌓으면 전체 발열량은 $2\text{W} \times 13 = 26\text{W}$로 급증합니다.
+              </div>
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <span class="font-bold text-slate-900 block mb-1">🚪 빠져나갈 탈출구는 오직 '상부'</span>
+                칩 아래는 회로 기판이라 열전도율이 낮습니다. 결국 모든 열은 패키지 맨 꼭대기(방열판)로만 빠져나가야 하는 <strong>직렬 병목</strong>이 발생합니다.
+              </div>
+            </div>
+            <p class="text-xs text-blue-800 bg-blue-50 p-3 rounded-lg border border-blue-200">
+              💡 <strong>발표 포인트:</strong> "적층 수가 늘어날수록 발열 밀도는 선형 이상으로 치솟지만, 방열 단면적은 고정되어 있기 때문에 열 관리가 패키징의 최대 병목이 됩니다."
+            </p>
+          </div>
+        `
+      },
+      {
+        step: 2,
+        title: "최하단 칩(칩 1, 로직 다이)이 가장 뜨거운 이유",
+        subtitle: "직렬 열 누적의 원리 (왜 맨 위 칩이 아니라 맨 아래 칩이 터질까?)",
+        badge: "핵심 메커니즘",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              열은 <strong>온도가 높은 곳에서 낮은 곳으로</strong> 흐릅니다. 꼭대기에 차가운 방열판이 붙어 있으므로 열의 흐름은 <code>[아래 → 위]</code> 방향입니다.
+            </p>
+            <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 text-amber-900 space-y-2">
+              <span class="font-bold block">🔥 직렬 열 누적(Thermal Accumulation):</span>
+              <ul class="list-disc list-inside space-y-1 text-xs sm:text-sm">
+                <li>맨 꼭대기 DRAM은 바로 위에 TIM과 방열판이 있어 열이 쉽게 빠져나갑니다.</li>
+                <li>반면, 맨 아래 <strong>칩 1(로직 다이)</strong>은 자신의 발열($q_0$)이 방열판에 도달하기 위해 <strong>위에 쌓인 모든 DRAM 다이와 실리콘 접합층(microbump, TSV)의 열저항을 전부 통과</strong>해야 합니다.</li>
+                <li>따라서 적층 수가 늘어날수록 맨 아래 칩 1의 온도가 가장 가파르게 치솟습니다 (Song & Yoon 3D 해석: 4Hi 60.9°C → 12Hi 107.3°C).</li>
+              </ul>
+            </div>
+            <p class="text-xs text-slate-600">
+              🎯 <strong>결론:</strong> HBM의 신뢰성 기준(85°C 또는 95°C)을 넘느냐 마느냐는 오직 <strong>최하단 칩 1의 최고온도($T_{max}$)</strong>에 의해 결정됩니다.
+            </p>
+          </div>
+        `
+      },
+      {
+        step: 3,
+        title: "TIM(열계면재료, Thermal Interface Material)의 역할",
+        subtitle: "금속과 실리콘 사이의 보이지 않는 공기 틈 메우기",
+        badge: "재료 기초",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              최상단 실리콘 칩과 구리 방열판(Heat sink)은 육안으로는 매끄러워 보이지만, 마이크로미터 단위로 확대하면 거친 표면 조도(roughness) 때문에 <strong>단 1~2%의 면적만 접촉</strong>하고 나머지는 전부 <strong>공기(Air)</strong>로 채워집니다.
+            </p>
+            <div class="bg-slate-100 p-4 rounded-xl border border-slate-300 text-center font-mono text-xs sm:text-sm">
+              공기의 열전도도 $k_{air} \approx 0.026\text{ W/(m·K)}$ (완벽한 단열재 수준!)
+            </div>
+            <p>
+              <strong>TIM</strong>은 이 미세한 공극을 유동성 있는 열전도 물질로 메워 방열판으로 열이 건너가는 고속도로를 놓아주는 핵심 재료입니다.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <div class="p-2.5 bg-slate-50 rounded-lg border"><strong>1. 서멀 그리스:</strong> 오일 베이스에 세라믹/금속 필러 분산 (가장 범용적, 저가)</div>
+              <div class="p-2.5 bg-blue-50 rounded-lg border border-blue-200"><strong>2. 상변화 물질(PTM):</strong> 상온 고체, 45~50°C 작동 시 액화되어 공극 밀착</div>
+              <div class="p-2.5 bg-indigo-50 rounded-lg border border-indigo-200"><strong>3. 인듐 시트:</strong> 연성 금속 포일, 압력으로 밀착 (초고열전도도, 고가)</div>
+            </div>
+          </div>
+        `
+      },
+      {
+        step: 4,
+        title: "“열전도도(k)만 높이면 끝?”의 치명적 오해",
+        subtitle: "접촉 열저항(R''c)과 실장 두께(BLT)의 한계수익체감 원리",
+        badge: "논문 핵심 이론",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              많은 사람들이 TIM 스펙표의 $k$(W/m·K) 숫자만 보고 비싼 것을 고릅니다. 하지만 실제 TIM의 면적당 총 열저항 식은 다음과 같습니다:
+            </p>
+            <div class="p-3 bg-slate-900 text-white rounded-xl text-center font-mono text-sm sm:text-base">
+              $$R''_{TIM} = \frac{\text{BLT}}{k_{TIM}} + R''_c$$
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+              <div class="p-3.5 bg-rose-50 rounded-xl border border-rose-200 text-rose-950">
+                <span class="font-bold block mb-1">📉 벌크 저항의 한계수익체감</span>
+                $k$가 1.5에서 6으로 늘어날 때는 벌크 저항($\text{BLT}/k$)이 확 줄어들지만, $k$가 6에서 80으로 늘어나도 저항 감소폭은 미미합니다.
+              </div>
+              <div class="p-3.5 bg-emerald-50 rounded-xl border border-emerald-200 text-emerald-950">
+                <span class="font-bold block mb-1">🚪 접촉 열저항($R''_c$)의 병목 현상</span>
+                고열전도도 TIM으로 갈수록 양쪽 표면의 불완전 접촉으로 인한 $R''_c$가 전체 열저항의 <strong>50% 이상을 지배</strong>합니다.
+              </div>
+            </div>
+            <p class="text-xs text-blue-900 bg-blue-50 p-3 rounded-lg border border-blue-200">
+              💡 <strong>핵심 요약:</strong> 아무리 $k$가 높아도 실장 두께(BLT)가 두껍거나 계면 밀착($R''_c$)이 나쁘면 저가 그리스보다 온도를 못 잡을 수 있습니다!
+            </p>
+          </div>
+        `
+      },
+      {
+        step: 5,
+        title: "1차원 열저항 직렬 모델 수식의 완벽 분해",
+        subtitle: "수식 (2)의 각 항이 물리적으로 무엇을 뜻하는가?",
+        badge: "수식 해부",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>논문의 심장인 수식 (2)를 항별로 쪼개어 이해하면 발표장에서 어떤 질문이 와도 흔들리지 않습니다:</p>
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center text-sm sm:text-base">
+              $$T_{max} = \underbrace{T_{\infty}}_{\text{(1) 주변온도}} + \underbrace{N q_0 \left(R_{rest} + \frac{R''_{TIM}}{A}\right)}_{\text{(2) 패키지 전체 발열이 겪는 저항}} + \underbrace{q_0 r \frac{N(N - 1)}{2}}_{\text{(3) 적층 내부 다이간 열 누적}}$$
+            </div>
+            <div class="space-y-2 text-xs sm:text-sm">
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <strong>(1) $T_{\infty}$ ($45\text{ }^\circ\text{C}$):</strong> 시스템 외부 공기의 기준 온도.
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <strong>(2) $N q_0 (R_{rest} + R''_{TIM}/A)$:</strong> 전체 $N$개 다이에서 나온 총 발열량($N q_0$)이 공통 방열판 경로($R_{rest} = 0.802\text{ K/W}$)와 상부 TIM을 통과할 때 생기는 전압 강하 같은 온도 상승.
+              </div>
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <strong>(3) $q_0 r \frac{N(N - 1)}{2}$:</strong> 1번 다이는 $N-1$개의 층간 저항을 거치고, 2번 다이는 $N-2$개를 거치는 등 내부 다이들의 등차수열 합($1 + 2 + \dots + (N-1) = \frac{N(N-1)}{2}$)으로 누적되는 내부 온도 상승 ($r = 0.228\text{ K/W}$).
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        step: 6,
+        title: "허용 열저항(R''allow)과 공랭의 물리적 한계",
+        subtitle: "10Hi(85°C)와 12Hi(95°C)에서 저항이 음수(< 0)가 된다는 뜻",
+        badge: "핵심 결론",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              $T_{max} \le T_{crit}$ 조건을 만족하기 위해 TIM이 가져야 할 상한선을 역산한 것이 <strong>허용 열저항 $R''_{allow}$</strong>입니다.
+            </p>
+            <div class="bg-rose-50 p-4 rounded-xl border border-rose-200 text-rose-950 space-y-2">
+              <span class="font-bold text-base block">🚨 $R''_{allow} < 0$ (음수)의 충격적인 공학적 의미:</span>
+              <p class="text-xs sm:text-sm">
+                TIM의 열저항을 물리적 한계인 $0$(완벽한 초전도체)으로 만들어도, 식 (2)의 방열판 저항($R_{rest}$)과 내부 층간 저항($r$)만으로 이미 한계 온도($85\text{ }^\circ\text{C}$ 또는 $95\text{ }^\circ\text{C}$)를 넘어버린다는 뜻입니다!
+              </p>
+              <ul class="list-disc list-inside text-xs font-semibold">
+                <li>85 °C 기준: 10Hi부터 공랭 불가능</li>
+                <li>95 °C 기준: 12Hi부터 공랭 불가능</li>
+              </ul>
+            </div>
+            <p class="text-xs text-slate-700 bg-slate-100 p-3 rounded-lg">
+              🚀 <strong>심사위원 방어 답변:</strong> "이 구간 이상에서는 상부 TIM을 백날 바꿔봐야 소용없으며, <strong>수랭 냉각</strong>으로 $R_{rest}$를 낮추거나 <strong>하이브리드 구리 본딩</strong>으로 $r$을 줄이는 시스템 레벨 혁신이 필수적임을 수학적으로 입증했습니다."
+            </p>
+          </div>
+        `
+      },
+      {
+        step: 7,
+        title: "경제성과 재작업률 4.25% 손익분기점",
+        subtitle: "비싼 TIM이 오히려 총 생산비를 아껴줄 수 있는 이유",
+        badge: "양산 공정성",
+        content: `
+          <div class="space-y-4 text-sm leading-relaxed text-slate-700">
+            <p>
+              단순히 재료비만 보면 고성능 TIM은 저가 범용 그리스보다 개당 단가가 수 배 이상 비쌉니다. 
+              하지만 반도체 패키징 양산 라인에서는 <strong>도포 불량, 기포(void), 들뜸</strong>으로 인한 재작업(Rework) 비용이 발생합니다.
+            </p>
+            <div class="p-4 bg-slate-900 text-white rounded-xl text-center">
+              <span class="text-amber-400 font-bold text-lg sm:text-xl block">손익분기 재작업률: 4.25%</span>
+              <span class="text-xs text-slate-300 mt-1 block">저가 그리스의 재작업률이 4.25%를 넘어가면 고성능 TIM이 총비용에서 더 저렴해집니다.</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-600">
+              고성능 상변화 시트(PTM)는 규격화된 패드로 부착되어 도포 균일도가 높고 불량률이 낮습니다. 
+              재작업에 드는 인건비, 세정비, 기판 파손 위험을 고려하면 <strong>초기 재료비가 비싸더라도 총소유비용(TCO) 관점에서 고성능 TIM이 유리할 수 있음</strong>을 정량적으로 제시했습니다.
+            </p>
+          </div>
+        `
+      }
+    ];
+
+    let currentStepIdx = 0;
+
+    function renderStepNavPills() {
+      const pillsContainer = document.getElementById('step-nav-pills');
+      pillsContainer.innerHTML = guideSteps.map((s, idx) => `
+        <button onclick="goToStep(${idx})" class="px-3 py-1 rounded-lg text-xs font-semibold transition ${idx === currentStepIdx ? 'bg-amber-400 text-slate-950 font-bold shadow' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">
+          ${s.step}. ${s.badge}
+        </button>
+      `).join('');
+    }
+
+    function renderStep() {
+      renderStepNavPills();
+      const s = guideSteps[currentStepIdx];
+      const container = document.getElementById('step-content-container');
+      container.innerHTML = `
+        <div class="border-b pb-4">
+          <div class="flex items-center gap-2 mb-1.5">
+            <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-blue-100 text-blue-800">Step ${s.step} / ${guideSteps.length}</span>
+            <span class="text-xs font-bold text-amber-600">${s.badge}</span>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900">${s.title}</h3>
+          <p class="text-xs sm:text-sm text-slate-500 mt-1">${s.subtitle}</p>
+        </div>
+        ${s.content}
+      `;
+      document.getElementById('step-counter').textContent = `Step ${s.step} / ${guideSteps.length}`;
+      document.getElementById('btn-prev-step').disabled = (currentStepIdx === 0);
+      document.getElementById('btn-prev-step').classList.toggle('opacity-50', currentStepIdx === 0);
+      if (window.renderMathInElement) renderMathInElement(container);
+    }
+
+    function nextStep() {
+      if (currentStepIdx < guideSteps.length - 1) {
+        currentStepIdx++;
+        renderStep();
+      } else {
+        switchTab('sim');
+      }
+    }
+
+    function prevStep() {
+      if (currentStepIdx > 0) {
+        currentStepIdx--;
+        renderStep();
+      }
+    }
+
+    function goToStep(idx) {
+      currentStepIdx = idx;
+      renderStep();
+    }
+
+    // --- Preset Definitions ---
+    const presets = {
+      grease_low:  { k: 1.5, blt: 50, rc: 0.100 },
+      grease_mid:  { k: 3.0, blt: 50, rc: 0.080 },
+      grease_high: { k: 6.0, blt: 38, rc: 0.010 },
+      pcm:         { k: 8.5, blt: 50, rc: 0.015 },
+      indium:      { k: 86.0, blt: 50, rc: 0.030 }
+    };
+
+    function applyPreset() {
+      const p = document.getElementById('param-preset').value;
+      if (p !== 'custom' && presets[p]) {
+        document.getElementById('param-k').value = presets[p].k;
+        document.getElementById('param-blt').value = presets[p].blt;
+        document.getElementById('param-rc').value = presets[p].rc;
+        updateSim();
+      }
+    }
+
+    function customChanged() {
+      document.getElementById('param-preset').value = 'custom';
+    }
+
+    function resetDefaults() {
+      document.getElementById('param-hi').value = 8;
+      document.getElementById('param-tinf').value = 45;
+      document.getElementById('param-preset').value = 'grease_low';
+      applyPreset();
+    }
+
+    // --- Mathematical Calculations ---
+    function calcTmax(nHi, tInf, k, blt_um, rc) {
+      const N = nHi + 1;
+      const bulkResistance = (blt_um * 0.01) / k; // cm^2*K/W
+      const r_tim_double_prime = bulkResistance + rc;
+      const r_tim = r_tim_double_prime / AREA; // K/W
+      const tmax = tInf + (N * Q0 * (R_REST + r_tim)) + (Q0 * R_LAYER * N * (N - 1) / 2);
+      return { tmax, r_tim_double_prime, bulkResistance, r_tim };
+    }
+
+    function calcAllowableR(nHi, tInf, tCrit) {
+      const N = nHi + 1;
+      const bracket = (tCrit - tInf - (Q0 * R_LAYER * N * (N - 1) / 2)) / (N * Q0) - R_REST;
+      const r_allow = AREA * bracket;
+      return r_allow;
+    }
+
+    // --- Simulator Update Logic ---
+    function updateSim() {
+      const nHi = parseInt(document.getElementById('param-hi').value);
+      const tInf = parseFloat(document.getElementById('param-tinf').value);
+      const k = parseFloat(document.getElementById('param-k').value);
+      const blt = parseFloat(document.getElementById('param-blt').value);
+      const rc = parseFloat(document.getElementById('param-rc').value);
+
+      document.getElementById('val-hi').textContent = `${nHi}Hi (총 ${nHi+1}다이)`;
+      document.getElementById('val-tinf').textContent = `${tInf} °C`;
+      document.getElementById('val-k').textContent = `${k.toFixed(1)} W/(m·K)`;
+      document.getElementById('val-blt').textContent = `${blt} µm`;
+      document.getElementById('val-rc').textContent = `${rc.toFixed(3)} cm²·K/W`;
+
+      const { tmax, r_tim_double_prime } = calcTmax(nHi, tInf, k, blt, rc);
+      const r_allow_85 = calcAllowableR(nHi, tInf, 85.0);
+      const r_allow_95 = calcAllowableR(nHi, tInf, 95.0);
+
+      document.getElementById('res-tmax').textContent = tmax.toFixed(1);
+      document.getElementById('res-rtim').textContent = r_tim_double_prime.toFixed(3);
+      document.getElementById('res-rallow').textContent = r_allow_85.toFixed(3);
+
+      const badgeTmax = document.getElementById('badge-tmax');
+      if (tmax <= 85.0) {
+        badgeTmax.className = 'mt-3 px-2.5 py-1 rounded-lg text-xs font-bold w-fit bg-emerald-100 text-emerald-800';
+        badgeTmax.textContent = '✅ 85 °C / 95 °C 기준 모두 만족 (안전 구간)';
+      } else if (tmax <= 95.0) {
+        badgeTmax.className = 'mt-3 px-2.5 py-1 rounded-lg text-xs font-bold w-fit bg-amber-100 text-amber-800';
+        badgeTmax.textContent = '⚠️ 85 °C 초과 / 95 °C 한계 이내 (경계 구간)';
+      } else {
+        badgeTmax.className = 'mt-3 px-2.5 py-1 rounded-lg text-xs font-bold w-fit bg-rose-100 text-rose-800';
+        badgeTmax.textContent = '❌ 95 °C 초과 (과열 허용 불가 구간)';
+      }
+
+      const vBox = document.getElementById('verdict-box');
+      if (r_allow_85 < 0 && r_allow_95 < 0) {
+        vBox.className = 'p-5 rounded-2xl border bg-rose-50 border-rose-200 text-rose-900';
+        vBox.innerHTML = `
+          <div class="font-bold text-sm flex items-center gap-1.5">
+            <span>🚨 공랭 한계 도달 (TIM 열저항 0이어도 초과)</span>
+          </div>
+          <p class="text-xs mt-1.5 leading-relaxed">
+            현재 <strong>${nHi}Hi</strong> 적층에서는 TIM을 완전한 초전도체(열저항 0)로 교체하더라도 95 °C 기준조차 충족할 수 없습니다. 
+            상부 TIM 변경만으로는 방열이 불가능하며, <strong>수랭 냉각(R_rest 감소)이나 층간 본딩 기술(r 감소)</strong>이 강제되는 구간입니다.
+          </p>
+        `;
+      } else if (r_allow_85 < 0 && r_allow_95 >= 0) {
+        vBox.className = 'p-5 rounded-2xl border bg-amber-50 border-amber-200 text-amber-900';
+        vBox.innerHTML = `
+          <div class="font-bold text-sm flex items-center gap-1.5">
+            <span>⚖️ 95 °C 기준 고성능 TIM 필수 선택 구간</span>
+          </div>
+          <p class="text-xs mt-1.5 leading-relaxed">
+            85 °C 기준으로는 TIM 저항이 음수가 되어 달성 불가하지만, <strong>95 °C 기준으로는 허용 열저항(${r_allow_95.toFixed(3)} cm²·K/W)</strong> 이하를 만족하는 고성능 TIM(상변화 물질, 인듐 시트 등)을 엄선해야만 통과할 수 있습니다.
+          </p>
+        `;
+      } else if (r_tim_double_prime <= r_allow_85) {
+        vBox.className = 'p-5 rounded-2xl border bg-emerald-50 border-emerald-200 text-emerald-900';
+        vBox.innerHTML = `
+          <div class="font-bold text-sm flex items-center gap-1.5">
+            <span>✨ 저가 범용 TIM으로도 충분한 경제적 구간</span>
+          </div>
+          <p class="text-xs mt-1.5 leading-relaxed">
+            현재 설정된 TIM 열저항(${r_tim_double_prime.toFixed(3)} cm²·K/W)이 허용 기준(${r_allow_85.toFixed(3)} cm²·K/W)보다 충분히 작아 85 °C 기준을 여유 있게 달성합니다. 
+            이 구간에서 고가 특수 TIM을 채택하는 것은 불필요한 과잉 사양(Over-specification)입니다.
+          </p>
+        `;
+      } else {
+        vBox.className = 'p-5 rounded-2xl border bg-blue-50 border-blue-200 text-blue-900';
+        vBox.innerHTML = `
+          <div class="font-bold text-sm flex items-center gap-1.5">
+            <span>🔧 TIM 사양 개선 필요 구간</span>
+          </div>
+          <p class="text-xs mt-1.5 leading-relaxed">
+            현재 TIM 열저항(${r_tim_double_prime.toFixed(3)} cm²·K/W)이 허용 열저항(${r_allow_85.toFixed(3)} cm²·K/W)을 초과했습니다. 
+            열전도도 $k$를 높이거나, 실장 두께(BLT)를 줄이거나, 접촉 열저항 $R''_c$를 낮추는 고성능 후보(PTM7950 등)로 교체해야 합니다.
+          </p>
+        `;
+      }
+
+      updateChart(tInf, k, blt, rc);
+    }
+
+    // --- Chart.js Rendering ---
+    let chartInstance = null;
+    function initChart() {
+      const ctx = document.getElementById('thermalChart').getContext('2d');
+      chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['4Hi', '6Hi', '8Hi', '10Hi', '12Hi', '14Hi', '16Hi'],
+          datasets: [
+            {
+              label: '선택된 TIM T_max (°C)',
+              data: [],
+              borderColor: '#2563eb',
+              backgroundColor: 'rgba(37, 99, 235, 0.1)',
+              borderWidth: 2.5,
+              tension: 0.2,
+              fill: true
+            },
+            {
+              label: '이상적 TIM (R=0) T_max (°C)',
+              data: [],
+              borderColor: '#94a3b8',
+              borderDash: [4, 4],
+              borderWidth: 1.5,
+              tension: 0.2
+            },
+            {
+              label: '85 °C 허용 한계',
+              data: [85, 85, 85, 85, 85, 85, 85],
+              borderColor: '#f59e0b',
+              borderDash: [6, 4],
+              borderWidth: 1.5,
+              pointRadius: 0
+            },
+            {
+              label: '95 °C 허용 한계',
+              data: [95, 95, 95, 95, 95, 95, 95],
+              borderColor: '#ef4444',
+              borderDash: [6, 4],
+              borderWidth: 1.5,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: { min: 50, max: 130, title: { display: true, text: '최고온도 (°C)' } },
+            x: { title: { display: true, text: 'DRAM 적층 수 (Hi)' } }
+          },
+          plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } }
+        }
+      });
+      window.chart = chartInstance;
+    }
+
+    function updateChart(tInf, k, blt, rc) {
+      if (!chartInstance) return;
+      const stackList = [4, 6, 8, 10, 12, 14, 16];
+      const curData = stackList.map(n => calcTmax(n, tInf, k, blt, rc).tmax);
+      const idealData = stackList.map(n => calcTmax(n, tInf, 1000, 1, 0).tmax);
+
+      chartInstance.data.datasets[0].data = curData;
+      chartInstance.data.datasets[1].data = idealData;
+      chartInstance.update();
+    }
+
+    // --- Mock Q&A Questions Database (9 Comprehensive Questions) ---
+    const defenseQuestions = [
+      {
+        id: "q1",
+        category: "모델링 & 물리적 가정",
+        difficulty: "최상 (심사위원 단골)",
+        title: "실제 HBM은 관통전극(TSV)과 언더필, 기판 방향의 3차원 열 확산이 심한데, 1차원 직렬 전도 모델이 공학적으로 유효합니까?",
+        context: "1차원 모델은 계산이 단순하지만 물리적 실제와 괴리가 있다는 지적을 받을 때, '모델의 목적'과 '보수적 최악조건 설계'를 들어 방어해야 합니다.",
+        keywords: ["직렬 열전달", "보수적", "최악 조건", "3차원 FEA", "닫힌 형태", "초기 설계", "대수식", "유효 파라미터"],
+        modelAnswer: "좋은 지적 감사드립니다. 실제 패키지는 TSV와 언더필, 기판으로의 3차원 방열이 존재합니다. 그러나 본 연구가 1차원 직렬 전도를 채택한 핵심 이유는 두 가지입니다. 첫째, HBM 구조상 방열판이 상부에 위치하므로 전체 열 유속의 대부분이 상부 TIM을 통과하는 수직 직렬 방향이 지배적입니다. 둘째, 측면 및 기판 방열을 배제한 직렬 모델은 방열이 가장 불리한 '최악 조건(Worst-case)'을 가정하므로, 신뢰성 엔지니어링 관점에서 보수적이고 안전한 TIM 스펙을 산출합니다. 또한 복잡한 3D FEA 없이도 적층 수에 따른 허용 열저항을 닫힌 형태(closed-form) 대수식으로 즉시 역산하여 초기 설계 비용을 획기적으로 줄여줍니다."
+      },
+      {
+        id: "q2",
+        category: "보정 & 오차 검증",
+        difficulty: "상 (데이터 신뢰도)",
+        title: "Song & Yoon의 단 3개 점(4Hi, 8Hi, 12Hi)으로 파라미터를 보정했는데, 과적합 위험은 없으며 교차검증 최대 오차 -7.7 °C는 어떻게 설명합니까?",
+        context: "Leave-one-out 교차검증 결과와 12Hi 고적층에서의 오차 원인을 정직하게 인정하면서 한계 극복 방안을 설명해야 합니다.",
+        keywords: ["교차검증", "Leave-one-out", "12Hi", "-7.7", "외삽", "비선형", "보정 파라미터", "Rrest", "r"],
+        modelAnswer: "정확한 지적이십니다. 본 연구는 4Hi, 8Hi, 12Hi 3점을 이용해 방열 유효저항 R_rest와 층당 저항 r을 결정했습니다. 모델의 신뢰성을 평가하기 위해 데이터를 하나씩 빼고 검증하는 Leave-one-out 내부 교차검증을 수행했습니다. 4Hi와 8Hi를 제외했을 때의 예측 오차는 ±1.4 °C 이내로 매우 정확했습니다. 다만 12Hi를 제외하고 4Hi·8Hi만으로 보정하여 12Hi를 외삽 예측했을 때 -7.7 °C의 오차가 발생했습니다. 이는 고적층으로 갈수록 열 누적으로 인한 온도 상승률의 비선형성이 커지기 때문입니다. 따라서 저희 논문 5절에 명시했듯, 본 모델은 4Hi~12Hi 보간 범위에서 매우 유효하며, 16Hi 이상의 외삽 시에는 고적층 3D 보정점을 추가 반영해야 한다는 한계를 명확히 밝혀 두었습니다."
+      },
+      {
+        id: "q3",
+        category: "TIM 물성 메커니즘",
+        difficulty: "상 (공학적 깊이)",
+        title: "현업에서는 보통 열전도도(k)가 높은 TIM만 찾는데, 왜 본 연구에서는 실장 두께(BLT)와 접촉 열저항(R''c)을 강조합니까?",
+        context: "R''TIM = BLT/k + R''c 수식에서 k가 증가함에 따라 벌크 저항 기여도가 감소하고 접촉저항이 병목(bottleneck)이 되는 한계수익체감 현상을 설명해야 합니다.",
+        keywords: ["접촉 열저항", "BLT", "벌크", "한계수익체감", "병목", "표면 조도", "상변화", "PTM"],
+        modelAnswer: "TIM의 총 면적당 열저항 식은 R''_TIM = BLT/k + R''_c 로 표현됩니다. 열전도도 k가 1~2 W/(m·K) 수준일 때는 벌크 전도 저항이 크지만, k가 5~6 이상으로 증가하면 BLT/k 항은 급격히 작아져 한계수익체감(Diminishing returns)에 도달합니다. 이때부터는 거친 표면과의 미세 공극으로 인한 접촉 열저항 R''_c가 전체 TIM 열저항의 40~60% 이상을 지배하게 됩니다. 즉, 무조건 고가의 고열전도도 재료를 쓰는 것보다, 상변화 물질(PTM)처럼 작동 온도에서 연화되어 미세 틈을 메우거나 실장 압력을 최적화해 BLT를 얇게 유지하고 R''_c를 낮추는 공정이 실제 칩 온도 하강에 훨씬 결정적인 영향을 미치기 때문입니다."
+      },
+      {
+        id: "q4",
+        category: "공학적 시사점 & 공랭 한계",
+        difficulty: "최상 (핵심 결론)",
+        title: "85 °C 기준 10Hi, 95 °C 기준 12Hi부터 허용 열저항이 음수(< 0)가 된다는 결과의 실제 산업적 의미는 무엇입니까?",
+        context: "TIM 열저항을 0으로 만들어도 온도를 못 잡는다는 물리적 한계와, 향후 12Hi/16Hi 양산 시 냉각 패러다임 전환(수랭/본딩)의 당위성을 제시해야 합니다.",
+        keywords: ["허용 열저항", "음수", "초전도체", "공랭 한계", "수랭", "하이브리드 본딩", "12Hi", "16Hi"],
+        modelAnswer: "허용 열저항 R''_allow가 음수가 된다는 것은, 열저항이 0인 이상적인 가상의 초전도체 TIM을 장착하더라도 최하단 칩 온도가 목표 기준을 초과한다는 뜻입니다. 즉, 이 적층 수 이상에서는 상부 TIM을 아무리 고성능으로 교체해도 공랭 조건에서는 물리적으로 칩 1의 온도를 보장할 수 없음을 엄밀한 수식으로 증명한 것입니다. 이 결과는 두 가지 공학적 로드맵을 제시합니다. 첫째, 12Hi~16Hi HBM을 공랭으로 구동하려면 DRAM 다이 사이의 본딩 방식(예: 비전도성 필름 대신 직접 구리 본딩인 하이브리드 본딩)을 적용해 층간 열저항 r 자체를 획기적으로 낮춰야 합니다. 둘째, 외부 방열 유효저항 R_rest를 낮추기 위해 강제 공랭에서 수랭(Liquid cooling) 또는 침전 냉각 방식으로 시스템 레벨의 냉각 패러다임을 전환해야 함을 시사합니다."
+      },
+      {
+        id: "q5",
+        category: "경제성 & 양산 비용",
+        difficulty: "중상 (실무적 적용)",
+        title: "비용 모델에서 재작업률 4.25%를 기준으로 고성능 TIM과 저가 그리스의 비용 순서가 뒤집힌다는 건 어떤 의미입니까?",
+        context: "초기 재료비가 비싼 고성능 TIM이라도 도포 불량률/재작업률을 낮출 수 있다면 전체 양산 단가에서 손익분기점을 넘길 수 있다는 통찰을 제시해야 합니다.",
+        keywords: ["재작업률", "손익분기점", "양품당 비용", "초기 재료비", "공정 신뢰도", "경제성"],
+        modelAnswer: "단순 재료 구매 비용만 보면 고성능 TIM은 저가 범용 그리스보다 수 배 이상 비쌉니다. 하지만 패키징 양산 공정에서는 도포 불량, 기포(void) 발생, 펌프아웃(pump-out) 등으로 인한 재작업(rework) 비용이 발생합니다. 본 연구의 비용 시나리오 모델에 따르면, 저가 그리스 적용 시 불량으로 인한 재작업률이 4.25%를 초과할 경우, 재작업 공정비와 수율 손실 비용이 커져 초기 재료비가 더 비싼 고성능 TIM을 쓸 때보다 양품당 기대 비용이 오히려 더 비싸진다는 손익분기점을 도출했습니다. 이는 TIM 선정 시 단순 스펙표의 단가만 볼 것이 아니라, 공정 신뢰도와 재작업 비용을 포함한 총소유비용(TCO) 관점에서 접근해야 함을 보여줍니다."
+      },
+      {
+        id: "q6",
+        category: "발열 프로파일 가정",
+        difficulty: "상 (실제 반도체 스펙)",
+        title: "DRAM 다이와 최하단 로직 다이의 발열량을 모두 q0 = 2 W로 균등하게 두었는데, 실제 고성능 GPU 연산 시 로직 다이의 발열이 훨씬 높지 않습니까? 이 가정이 결과에 미치는 영향은?",
+        context: "선행 연구(Song & Yoon)와의 일대일 비교를 위해 조건을 맞춘 배경을 설명하고, 로직 다이 발열 증가 시 경계 조건이 어떻게 보수적으로 이동하는지 분석해야 합니다.",
+        keywords: ["로직 다이", "발열 밀도", "Song & Yoon", "기준 조건", "경계 이동", "보수적", "q0"],
+        modelAnswer: "매우 정확한 지적이십니다. 실제 양산 HBM에서 최하단 베이스(로직) 다이는 고속 인터페이스와 PHY 회로가 집적되어 있어 DRAM 다이보다 면적당 발열 밀도가 더 높을 수 있습니다. 본 연구가 모든 다이의 발열을 q0 = 2 W로 통일한 이유는, 선행연구인 Song과 Yoon의 3차원 FEA 시뮬레이션 경계조건을 동일하게 적용하여 모델 파라미터를 정확히 보정하고 비교하기 위함이었습니다. 만약 로직 다이의 발열량이 q_logic > q0로 커질 경우, 식 (2)에서 최하단 칩의 자체 발열 항 기여도가 급증하여 T_max가 더 가파르게 오릅니다. 이에 따라 허용 열저항 R''_allow는 전반적으로 감소하게 되며, 이는 8Hi나 6Hi 같은 저적층에서도 고성능 TIM이 요구되는 쪽으로 경계가 한두 단 앞당겨지는 결과를 낳게 됩니다."
+      },
+      {
+        id: "q7",
+        category: "정상상태 vs 과도응답",
+        difficulty: "최상 (재료 열역학)",
+        title: "상변화 물질(PTM)의 핵심 장점은 잠열(Latent heat)에 의한 열 흡수인데, 연구 모델은 '정상상태(Steady-state)'를 가정했습니다. 그렇다면 PTM의 잠열 효과는 무시된 것 아닙니까?",
+        context: "정상상태에서 잠열의 한계와, 정상상태에서도 PTM이 우수한 진짜 이유(상변화 후 계면 밀착성 및 초저 접촉열저항 달성)를 명확히 짚어야 합니다.",
+        keywords: ["정상상태", "잠열", "과도", "액화", "계면 젖음성", "Rc", "0.015", "공극 메움"],
+        modelAnswer: "교수님께서 열역학적으로 가장 핵심적인 급소를 지적해 주셨습니다. 맞습니다. 상변화 물질의 '잠열(Latent heat)' 효과는 전원이 켜지거나 연산 피크가 튀는 과도 상태(Transient thermal shock)에서 일시적으로 온도를 지연시키는 역할을 하지만, 지속적인 연산이 이루어지는 '정상상태'에 도달하면 상변화가 완전히 완료되어 잠열에 의한 열 흡수는 더 이상 발생하지 않습니다. 그럼에도 불구하고 본 정상상태 모델에서 PTM이 뛰어난 후보로 도출된 이유는 잠열 때문이 아니라, 작동 온도(약 45~50°C)에서 고분자 매트릭스가 연화·액화되어 계면의 미세 공극을 완벽하게 적셔주는(wetting) 특성 덕분에 접촉 열저항 R''_c를 0.015 cm²·K/W라는 극도로 낮은 값으로 유지해주기 때문입니다."
+      },
+      {
+        id: "q8",
+        category: "패키징 신뢰성",
+        difficulty: "상 (양산 신뢰성)",
+        title: "고성능 그리스나 인듐 시트를 제안하셨는데, 반복적인 가열·냉각 사이클 시 실리콘과 구리 방열판의 열팽창계수(CTE) 차이로 인한 '펌프아웃(Pump-out)'이나 박리 문제는 어떻게 봅니까?",
+        context: "실리콘과 구리의 CTE 불일치로 인한 열 피로 현상과, 그리스 대신 PTM(상변화 물질)이 신뢰성 면에서 왜 최적 대안인지 설명해야 합니다.",
+        keywords: ["열팽창계수", "CTE", "펌프아웃", "Pump-out", "박리", "상변화", "PTM", "신뢰성"],
+        modelAnswer: "실제 반도체 신뢰성 엔지니어링에서 가장 심각하게 다루어지는 병목입니다. 실리콘(CTE 약 2.6 ppm/K)과 구리 방열판(CTE 약 16.5 ppm/K)의 열팽창계수 차이가 크기 때문에, 칩이 뜨거워졌다 식는 열 사이클이 반복되면 계면이 수축·팽창하며 액상 그리스를 바깥으로 밀어내는 '펌프아웃(Pump-out)' 현상이 발생하여 R''_c가 급격히 치솟습니다. 인듐 시트의 경우 금속 간 화합물(IMC) 형성이나 보이드 위험이 있습니다. 반면 본 연구에서 강력히 추천하는 PTM7950 같은 상변화 물질은 고온에서만 겔 상태가 되고 상온에서는 다시 고체로 돌아오며 가교 구조를 지니므로 펌프아웃 저항성이 그리스 대비 압도적으로 우수합니다. 따라서 장기 신뢰성까지 종합하면 PTM 계열이 가장 균형 잡힌 해법입니다."
+      },
+      {
+        id: "q9",
+        category: "시스템 공조 연계",
+        difficulty: "중상 (데이터센터 관점)",
+        title: "주변 온도를 40 °C에서 50 °C로 바꾸었을 때 허용 경계가 11Hi에서 9Hi로 급변한다고 했는데, 이것이 AI 데이터센터 설계자에게 주는 실질적인 메시지는 무엇입니까?",
+        context: "칩 패키지 레벨의 TIM 스펙 최적화만으로는 한계가 있으며, 데이터센터 실내 공조(CRAC/HVAC) 온도 관리가 패키징 마진을 좌우한다는 코디자인(Co-design) 시각을 제시합니다.",
+        keywords: ["데이터센터", "흡기 온도", "공조", "CRAC", "Co-design", "공동 최적화", "적층 마진"],
+        modelAnswer: "이 분석은 반도체 패키징 엔지니어와 데이터센터 인프라 엔지니어가 반드시 '공동 최적화(Co-design)'를 해야 함을 시사합니다. 데이터센터 서버 룸의 흡기(Inlet) 온도가 단 5 °C만 상승해 45 °C에서 50 °C가 되면, HBM의 공랭 가능 한계 적층 수가 10Hi에서 9Hi로 뚝 떨어집니다. 즉, 패키징 레벨에서 아무리 최고급 TIM을 적용해도 데이터센터의 공조(CRAC) 냉방이 부실하면 적층 마진이 완전히 잠식당합니다. 반대로 공조 온도를 40 °C로 낮출 수 있다면 11Hi까지도 공랭으로 버틸 수 있는 여유가 생기므로, 패키지 TIM 선정과 서버 랙의 공랭 인프라가 유기적으로 연계되어야 함을 증명하는 정량적 근거가 됩니다."
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+
+    function renderQuestionList() {
+      const container = document.getElementById('question-list');
+      container.innerHTML = defenseQuestions.map((q, idx) => `
+        <button onclick="selectQuestion(${idx})" class="w-full text-left p-3 rounded-xl border transition text-xs ${idx === currentQuestionIdx ? 'border-blue-500 bg-blue-50 text-blue-900 font-bold shadow-sm' : 'border-slate-200 hover:bg-slate-50 text-slate-700'}">
+          <div class="flex items-center justify-between text-[11px] text-slate-500 mb-1">
+            <span>${q.category}</span>
+            <span class="text-rose-600 font-semibold">${q.difficulty}</span>
+          </div>
+          <div class="line-clamp-2 leading-relaxed">${q.title}</div>
+        </button>
+      `).join('');
+    }
+
+    function selectQuestion(idx) {
+      currentQuestionIdx = idx;
+      renderQuestionList();
+      const q = defenseQuestions[idx];
+      document.getElementById('active-q-category').textContent = q.category;
+      document.getElementById('active-q-difficulty').textContent = q.difficulty;
+      document.getElementById('active-q-title').textContent = q.title;
+      document.getElementById('active-q-context').innerHTML = `<strong>💡 심사위원 출제 의도:</strong> ${q.context}`;
+      document.getElementById('user-answer-input').value = '';
+      document.getElementById('feedback-result-container').classList.add('hidden');
+    }
+
+    function pickRandomQuestion() {
+      const nextIdx = (currentQuestionIdx + Math.floor(Math.random() * (defenseQuestions.length - 1)) + 1) % defenseQuestions.length;
+      selectQuestion(nextIdx);
+    }
+
+    // --- Intelligent Answer Evaluation Engine ---
+    function evaluateAnswer() {
+      const ans = document.getElementById('user-answer-input').value.trim();
+      if (!ans || ans.length < 15) {
+        alert('답변을 조금 더 구체적으로 작성해 주세요 (최소 15자 이상).');
+        return;
+      }
+
+      const q = defenseQuestions[currentQuestionIdx];
+      let matchedKeywords = [];
+      let missingKeywords = [];
+      q.keywords.forEach(kw => {
+        if (ans.includes(kw)) {
+          matchedKeywords.push(kw);
+        } else {
+          missingKeywords.push(kw);
+        }
+      });
+
+      const matchRatio = matchedKeywords.length / q.keywords.length;
+      let grade = 'C';
+      let scoreColor = 'text-rose-600 bg-rose-50 border-rose-200';
+      let comment = '';
+
+      if (matchRatio >= 0.55 || (ans.length > 150 && matchRatio >= 0.35)) {
+        grade = 'S';
+        scoreColor = 'text-emerald-700 bg-emerald-50 border-emerald-200';
+        comment = '심사위원이 고개를 끄덕일 만큼 논리적이고 핵심 공학 개념이 명확히 담긴 모범적인 답변입니다!';
+      } else if (matchRatio >= 0.3 || ans.length > 90) {
+        grade = 'A';
+        scoreColor = 'text-blue-700 bg-blue-50 border-blue-200';
+        comment = '방향성은 매우 훌륭합니다. 누락된 세부 수치나 공학적 용어를 보강하면 완벽한 디펜스가 됩니다.';
+      } else if (matchRatio >= 0.12 || ans.length > 45) {
+        grade = 'B';
+        scoreColor = 'text-amber-700 bg-amber-50 border-amber-200';
+        comment = '답변의 핵심을 짚었으나, 공학적 근거(수식, 파라미터, 보수적 관점 등)가 다소 부족합니다.';
+      } else {
+        grade = 'C';
+        scoreColor = 'text-rose-700 bg-rose-50 border-rose-200';
+        comment = '질문의 핵심 급소를 비껴갔습니다. 심사위원이 재차 꼬리 질문을 던질 위험이 큽니다.';
+      }
+
+      const fbContainer = document.getElementById('feedback-result-container');
+      fbContainer.classList.remove('hidden');
+      fbContainer.innerHTML = `
+        <div class="flex items-center justify-between border-b pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl font-black px-4 py-1.5 rounded-2xl border ${scoreColor}">${grade} 등급</span>
+            <div>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base">심사위원 모의 평가 결과</h4>
+              <p class="text-xs text-slate-500">${comment}</p>
+            </div>
+          </div>
+          <span class="text-xs text-slate-400">평가 시각: ${new Date().toLocaleTimeString()}</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-100">
+            <span class="font-bold text-emerald-800 block mb-1.5">✅ 답변에서 칭찬할 만한 핵심 키워드:</span>
+            <div class="flex flex-wrap gap-1">
+              ${matchedKeywords.length > 0 ? matchedKeywords.map(k => `<span class="bg-emerald-200 text-emerald-900 px-2 py-0.5 rounded font-medium">${k}</span>`).join('') : '<span class="text-slate-400">인식된 핵심 키워드가 적습니다.</span>'}
+            </div>
+          </div>
+          <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
+            <span class="font-bold text-rose-800 block mb-1.5">⚠️ 빠뜨린 핵심 보완 키워드:</span>
+            <div class="flex flex-wrap gap-1">
+              ${missingKeywords.length > 0 ? missingKeywords.map(k => `<span class="bg-rose-200 text-rose-900 px-2 py-0.5 rounded font-medium">${k}</span>`).join('') : '<span class="text-emerald-700 font-bold">모든 핵심 키워드를 잘 챙기셨습니다!</span>'}
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 text-slate-100 p-4 rounded-xl text-xs sm:text-sm space-y-2">
+          <div class="flex items-center justify-between text-amber-400 font-bold text-xs uppercase tracking-wider">
+            <span>🏆 실전 발표장 100점짜리 모범 답변 가이드</span>
+            <span>암기 & 체화용</span>
+          </div>
+          <p class="leading-relaxed text-slate-200 font-normal">
+            "${q.modelAnswer}"
+          </p>
+        </div>
+      `;
+
+      saveHistoryItem({
+        id: Date.now(),
+        questionTitle: q.title,
+        questionCategory: q.category,
+        userAnswer: ans,
+        grade: grade,
+        modelAnswer: q.modelAnswer,
+        timestamp: new Date().toLocaleString()
+      });
+    }
+
+    // --- History Storage & UI ---
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem('hyeongnam_defense_history') || '[]');
+      } catch (e) { return []; }
+    }
+
+    function saveHistoryItem(item) {
+      const history = getHistory();
+      history.unshift(item);
+      localStorage.setItem('hyeongnam_defense_history', JSON.stringify(history));
+      updateHistoryBadge();
+    }
+
+    function updateHistoryBadge() {
+      const count = getHistory().length;
+      document.getElementById('history-badge').textContent = count;
+    }
+
+    function renderHistory() {
+      const list = getHistory();
+      const container = document.getElementById('history-container');
+      updateHistoryBadge();
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white p-12 text-center rounded-2xl border border-slate-200 text-slate-400 text-sm">
+            아직 기록된 연습 내역이 없습니다.<br>
+            <button onclick="switchTab('qa')" class="mt-3 text-blue-600 font-bold hover:underline">
+              'AI 심사위원 모의 디펜스' 탭에서 첫 질문에 답변해 보세요!
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((item, idx) => `
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between text-xs border-b pb-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2 py-0.5 rounded font-bold ${item.grade === 'S' ? 'bg-emerald-100 text-emerald-800' : item.grade === 'A' ? 'bg-blue-100 text-blue-800' : item.grade === 'B' ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800'}">${item.grade} 등급</span>
+              <span class="text-slate-500 font-medium">${item.questionCategory}</span>
+            </div>
+            <span class="text-slate-400">${item.timestamp}</span>
+          </div>
+
+          <h4 class="font-bold text-slate-900 text-sm leading-snug">Q. ${item.questionTitle}</h4>
+          
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-700">
+            <span class="font-bold text-slate-900 block mb-1">내 답변:</span>
+            <p class="whitespace-pre-wrap">${item.userAnswer}</p>
+          </div>
+
+          <div class="bg-blue-50/60 p-3 rounded-xl border border-blue-100 text-xs text-blue-900">
+            <span class="font-bold text-blue-800 block mb-1">모범 답변 가이드:</span>
+            <p>${item.modelAnswer}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function clearHistory() {
+      if (confirm('모의 연습 기록을 모두 삭제하시겠습니까?')) {
+        localStorage.removeItem('hyeongnam_defense_history');
+        renderHistory();
+      }
+    }
+
+    function exportHistoryMarkdown() {
+      const list = getHistory();
+      if (list.length === 0) {
+        alert('내보낼 연습 기록이 없습니다.');
+        return;
+      }
+      let md = `# 형남공학상 발표 모의 디펜스 오답노트\n\n`;
+      list.forEach((item, i) => {
+        md += `### ${i+1}. [${item.questionCategory}] ${item.questionTitle}\n`;
+        md += `- **평가 등급**: ${item.grade}\n`;
+        md += `- **작성 일시**: ${item.timestamp}\n\n`;
+        md += `**내 답변:**\n> ${item.userAnswer.replace(/\n/g, '\n> ')}\n\n`;
+        md += `**모범 답변:**\n${item.modelAnswer}\n\n---\n\n`;
+      });
+      navigator.clipboard.writeText(md).then(() => {
+        alert('모의 연습 오답노트가 마크다운 형식으로 클립보드에 복사되었습니다! 노션이나 깃허브 이슈에 붙여넣으실 수 있습니다.');
+      });
+    }
+
+    // --- Onload Initialization ---
+    window.addEventListener('DOMContentLoaded', () => {
+      initChart();
+      resetDefaults();
+      renderStep();
+      renderQuestionList();
+      selectQuestion(0);
+      updateHistoryBadge();
+    });
+  </script>
+</body>
+</html>
